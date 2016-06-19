@@ -9,7 +9,15 @@ def phonenumber_validator(value):
         raise ValidationError('휴대폰 번호를 입력해주세요.')
 
 
+class PhoneNumberField(models.CharField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('max_length', 15)
+        kwargs.setdefault('validators', [])
+        kwargs['validators'].append(phonenumber_validator)
+        super(PhoneNumberField, self).__init__(*args, **kwargs)
+
+
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     address = models.CharField(max_length=100, blank=True)
-    phone = models.CharField(max_length=15, blank=True, validators=[phonenumber_validator])
+    phone = PhoneNumberField(blank=True)
