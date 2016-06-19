@@ -8,6 +8,15 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'content': self.content,
+            'tags': self.tags.all(),
+        }
+
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post)
@@ -18,3 +27,9 @@ class Comment(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=100, unique=True)
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
