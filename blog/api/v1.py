@@ -13,6 +13,6 @@ def post_detail(request, pk):
 
 
 urlpatterns = [
-    url(r'^posts/$', post_list),
-    url(r'^posts/(?P<pk>\d+)/$', post_detail),
+    url(r'^posts/$', post_list, name='post_list'),
+    url(r'^posts/(?P<pk>\d+)/$', post_detail, name='post_detail'),
 ]
