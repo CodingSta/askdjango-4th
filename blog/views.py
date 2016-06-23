@@ -11,4 +11,12 @@ index2 = TemplateView.as_view(template_name='blog/index.html')
 
 
 def post_detail(request, pk, category_pk=None):
-    return HttpResponse('pk = {}, category_pk = {}'.format(pk, category_pk))
+    return HttpResponse('''pk = {}, category_pk = {}
+
+<p>request.GET = {}</p>
+<p>request.POST = {}</p>
+<p>request.FILES = {}</p>
+'''.format(pk, category_pk,
+        repr(request.GET.getlist('a')),
+        repr(request.POST),
+        repr(request.FILES)))
