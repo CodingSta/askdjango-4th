@@ -7,6 +7,8 @@ from blog.forms import PostForm, PostModelForm
 
 
 def index(request):
+    # messages.debug(request, 'hello messages framework.')
+    # messages.error(request, 'error messages framework.')
     return render(request, 'blog/index.html')
 
 

@@ -140,3 +140,8 @@ STATICFILES_DIRS = [
     # os.path.join(BASE_DIR, 'askdjango', 'static'),
     ROOT('askdjango', 'static'),
 ]
+
+
+from django.contrib.messages import constants as messages_constants
+MESSAGE_LEVEL = messages_constants.DEBUG
+MESSAGE_TAGS = {messages_constants.ERROR: 'danger'}
