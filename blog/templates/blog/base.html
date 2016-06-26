@@ -6,6 +6,10 @@
 <title>Ask Django Blog</title>
 <link rel="stylesheet" href="{% static "bootstrap/3.3.6/css/bootstrap.min.css" %}" />
 <link rel="stylesheet" href="{% static "blog/main.css" %}" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" />
+<script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.2/toastr.min.js"></script>
+
 <style>
 body {
     padding-top: 60px;
@@ -47,6 +51,11 @@ body {
                 {{ message }}
             </div>
             <!-- <script>toaste("{{ message }}", "{{ message.tags }}");</script> -->
+            <script>
+            $(function() {
+                toastr.{{ message.tags }}('{{ message }}');
+            });
+            </script>
         {% endfor %}
     </div>
 {% endif %}
