@@ -38,4 +38,4 @@ def post_new(request):
     else:
         form = PostModelForm()
 
-    return render(request, 'blog/post_form.html', {'form': form})
+    return render(request, 'blog/post_form.html', {'legend': '새 포스팅 쓰기', 'form': form})
