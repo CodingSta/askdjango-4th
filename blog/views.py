@@ -29,9 +29,11 @@ def post_new(request):
     if request.method == 'POST':
         form = PostModelForm(request.POST)
         if form.is_valid():
-            form.save()  # ModelForm 에서만 지원되는 함수
+            post = form.save(commit=False)  # ModelForm 에서만 지원되는 함수
+            post.title = 'auto title'
+            post.save()
             return redirect('blog:index')
     else:
-        form = PostForm()
+        form = PostModelForm()
 
     return render(request, 'blog/post_form.html', {'form': form})

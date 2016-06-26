@@ -8,14 +8,16 @@ class PostForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea)
 
     # forms.Form 에는 없지만, ModelForm 과 유사한 인터페이스를 만들어주기 위해 구현
-    def save(self):
+    def save(self, commit=True):
         title = self.cleaned_data['title']
         content = self.cleaned_data['content']
-        post = Post.objects.create(title=title, content=content)
+        post = Post(title=title, content=content)
+        if commit:
+            post.save()
         return post
 
 
 class PostModelForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ['content']  #'__all__'
