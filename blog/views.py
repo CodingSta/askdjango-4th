@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from blog.models import Post
+from blog.forms import PostForm, PostModelForm
 
 
 def index(request):
@@ -26,17 +27,11 @@ def post_detail(request, pk, category_pk=None):
 def post_new(request):
     errors = []
     if request.method == 'POST':
-        title = request.POST['title']
-        content = request.POST['content']
-        if not title:
-            errors.append('제목을 넣어주세요.')
-        if len(title) < 5:
-            errors.append('제목을 5자 이상 입력해주세요.')
-        if not content:
-            errors.append('내용을 넣어주세요.')
-
-        if not errors:
-            Post.objects.create(title=title, content=content)
+        form = PostModelForm(request.POST)
+        if form.is_valid():
+            form.save()  # ModelForm 에서만 지원되는 함수
             return redirect('blog:index')
+    else:
+        form = PostForm()
 
-    return render(request, 'blog/post_form.html', {'errors': errors})
+    return render(request, 'blog/post_form.html', {'form': form})

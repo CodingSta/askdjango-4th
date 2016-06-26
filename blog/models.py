@@ -1,9 +1,10 @@
 from django.core.urlresolvers import reverse
+from django.core.validators import MinLengthValidator
 from django.db import models
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, validators=[MinLengthValidator(3)])
     content = models.TextField()
     tags = models.ManyToManyField('Tag', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
