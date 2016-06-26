@@ -141,6 +141,9 @@ STATICFILES_DIRS = [
     ROOT('askdjango', 'static'),
 ]
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 
 from django.contrib.messages import constants as messages_constants
 MESSAGE_LEVEL = messages_constants.DEBUG
