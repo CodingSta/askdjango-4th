@@ -20,6 +20,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^accounts/', include('accounts.urls')),  # namespace 를 붙이지 않습니다.!
     url(r'^blog/', include('blog.urls', namespace='blog')),
 ]
 
