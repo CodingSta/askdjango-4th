@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, TemplateView
@@ -34,6 +35,7 @@ def post_detail(request, pk, category_pk=None):
         repr(request.FILES)))
 
 
+@login_required
 def post_new(request):
     errors = []
     if request.method == 'POST':
