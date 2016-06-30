@@ -8,7 +8,8 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(settings.LOGIN_URL)
+            next_url = request.GET.get('next', '')
+            return redirect(settings.LOGIN_URL + '?next=' + next_url)
     else:
         form = SignupForm()
     return render(request, 'accounts/signup_form.html', {

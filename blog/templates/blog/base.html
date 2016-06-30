@@ -53,7 +53,7 @@ body {
   <a href="{% url "logout" %}?next={{ request.path }}">로그아웃</a>
 {% else %}
   <a href="{% url "login" %}?next={{ request.path }}">로그인</a>
-  <a href="{% url "signup" %}">회원가입</a>
+  <a href="{% url "signup" %}?next={{ request.path }}">회원가입</a>
 {% endif %}
 
 {% if messages %}
