@@ -8,4 +8,5 @@ urlpatterns = [
         'template_name': 'accounts/login_form.html',
     }),
     url(r'^logout/$', logout, name='logout'),
+    url(r'^profile/$', views.profile, name='profile'),
 ]
