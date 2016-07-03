@@ -17,11 +17,15 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.shortcuts import redirect
+from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('accounts.urls')),  # namespace 를 붙이지 않습니다.!
     url(r'^blog/', include('blog.urls', namespace='blog')),
+    url(r'^$', lambda request: redirect('blog:index'), name='root'),
+    # url(r'^$', RedirectView.as_view(pattern_name='blog:index'), name='root'),
 ]
 
 # urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
