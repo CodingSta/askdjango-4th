@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, TemplateView
 from blog.models import Post
 from blog.forms import PostForm, PostModelForm
@@ -37,7 +37,6 @@ def post_detail(request, pk, category_pk=None):
 
 @login_required
 def post_new(request):
-    errors = []
     if request.method == 'POST':
         form = PostModelForm(request.POST, request.FILES)
         if form.is_valid():
@@ -48,5 +47,23 @@ def post_new(request):
             return redirect('blog:index')
     else:
         form = PostModelForm()
+
+    return render(request, 'blog/post_form.html', {'legend': '새 포스팅 쓰기', 'form': form})
+
+
+@login_required
+def post_edit(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.method == 'POST':
+        form = PostModelForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)  # ModelForm 에서만 지원되는 함수
+            post.title = 'auto title'
+            post.save()
+            messages.success(request, '포스팅을 저장했습니다.')
+            return redirect('blog:index')
+    else:
+        form = PostModelForm(instance=post)
 
     return render(request, 'blog/post_form.html', {'legend': '새 포스팅 쓰기', 'form': form})
