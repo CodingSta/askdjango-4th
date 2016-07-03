@@ -1,9 +1,11 @@
 import os
 from uuid import uuid4
+from django.core.files import File
 from django.core.urlresolvers import reverse
 from django.core.validators import MinLengthValidator
 from django.db import models
 from django.db.models.signals import pre_save
+from askdjango.pil_image import thumbnail
 
 
 def my_upload_to(post, filename):
@@ -37,8 +39,11 @@ class Post(models.Model):
     def on_pre_save(sender, **kwargs):
         # if kwargs['created']: pass
         post = kwargs['instance']
-        # post.photo
-        # post.thumbnail
+        if post.photo:
+            max_width = 800
+            if post.photo.width > max_width or post.photo.height > max_width:
+                processed_file = thumbnail(post.photo.file, max_width, max_width)
+                post.photo.save(post.photo.name, File(processed_file))
 
 pre_save.connect(Post.on_pre_save, sender=Post)
 
