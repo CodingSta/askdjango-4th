@@ -14,10 +14,18 @@ def index(request):
     return render(request, 'blog/index.html')
 '''
 
+'''
+def index(request):
+    post_list = Post.objects.all().order_by('-id')
+    return render(request, 'blog/index.html', {'post_list': post_list})
+'''
+
+
 index = ListView.as_view(
     model=Post,
     queryset=Post.objects.all().order_by('-id'),
-    template_name='blog/index.html')
+    template_name='blog/index.html',
+    paginate_by=10)
 
 
 index2 = TemplateView.as_view(template_name='blog/index.html')
