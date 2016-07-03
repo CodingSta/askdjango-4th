@@ -67,3 +67,13 @@ def post_edit(request, pk):
         form = PostModelForm(instance=post)
 
     return render(request, 'blog/post_form.html', {'legend': '새 포스팅 쓰기', 'form': form})
+
+
+@login_required
+def post_delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('blog:index')
+    return render(request, 'blog/post_delete_confirm.html', {'post': post})
+
