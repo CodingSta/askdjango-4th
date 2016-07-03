@@ -20,7 +20,7 @@ def index(request):
     return render(request, 'blog/index.html', {'post_list': post_list})
 '''
 
-
+# 기본 template_name : 모델명_list.html
 index = ListView.as_view(
     model=Post,
     queryset=Post.objects.all().order_by('-id'),
@@ -83,5 +83,5 @@ def post_delete(request, pk):
     if request.method == 'POST':
         post.delete()
         return redirect('blog:index')
-    return render(request, 'blog/post_delete_confirm.html', {'post': post})
+    return render(request, 'blog/post_confirm_delete.html', {'post': post})
 
