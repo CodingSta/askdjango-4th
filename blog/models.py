@@ -1,13 +1,22 @@
+import os
+from uuid import uuid4
 from django.core.urlresolvers import reverse
 from django.core.validators import MinLengthValidator
 from django.db import models
 from django.db.models.signals import pre_save
 
 
+def my_upload_to(post, filename):
+    ext = os.path.splitext(filename)[-1].lower()
+    filename = uuid4().hex + ext
+    return filename[:3] + '/' + filename[3:]
+    # return filename
+
+
 class Post(models.Model):
     title = models.CharField(max_length=100, validators=[MinLengthValidator(3)])
     content = models.TextField()
-    photo = models.ImageField()
+    photo = models.ImageField(upload_to=my_upload_to)
     tags = models.ManyToManyField('Tag', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
